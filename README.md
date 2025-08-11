@@ -48,7 +48,3 @@ npm run preview
 ## Contact
 
 LinkedIn: https://www.linkedin.com/in/rowellewis
-
-## License & usage
-
-All resume content © Rowel Lewis. Please do not copy or reuse without permission.
