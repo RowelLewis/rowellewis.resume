@@ -1,56 +1,54 @@
-# Portfolio Resume App
+# rowellewis.dev
 
-A modern, accessible resume site built with React, TypeScript, Tailwind CSS v4, and shadcn/ui, powered by Vite. It supports dark/light mode and includes print styles for easy PDF export.
+This repository contains my resume website. It’s a simple, fast, and print‑friendly page that presents my experience and skills.
 
-## Features
+## View
 
-- React + TypeScript + Vite for fast DX
-- Tailwind CSS v4 with the official @tailwindcss/vite plugin
-- shadcn/ui components (Button, Card, Badge, Separator)
-- Semantic, accessible structure (landmarks and headings)
-- Print-optimized CSS with a Download PDF button (window.print)
-- Unit tests with Vitest + React Testing Library + jest-dom
-
-## Scripts
-
-- Dev server: `npm run dev`
-- Type check + build: `npm run build`
-- Preview production build: `npm run preview`
-- Lint: `npm run lint`
-- Tests (watch): `npm test`
-- Tests (CI): `npm run test:run`
-
-## Tech Notes
-
-- Tailwind is configured via the Vite plugin and a single `@import "tailwindcss";` in `src/index.css`. See Tailwind docs: https://tailwindcss.com/docs/installation/using-vite
-- Path alias `@/*` maps to `./src/*` (tsconfig + Vite resolve) for shadcn imports.
-- shadcn/ui initialized with the CLI; components live under `src/components/ui/*`. Docs: https://ui.shadcn.com/docs/installation/vite
-
-## Structure
-
-- `src/types/resume.ts` — Type definitions
-- `src/data/resume.ts` — Resume content
-- `src/components/Resume.tsx` — Main resume UI (Tailwind + shadcn)
-- `src/components/ui/*` — shadcn/ui components
-- `src/App.tsx` — App entry
-- `src/index.css`, `src/App.css` — Base + print styles
-
-## Print to PDF
-
-Click the “Download PDF” button in the footer or use your browser’s print dialog.
+- Open the live site (if deployed) or run locally.
+- To save a PDF, use your browser’s Print dialog and choose “Save as PDF”.
 
 Suggested print settings:
-
 - Destination: Save as PDF
 - Margins: Default or None
-- Background graphics: Enabled (for theme accents)
+- Background graphics: Enabled (for subtle accents)
 
-## Requirements
+## Update content
 
-- Node 18+ recommended
+All resume content lives in a single file:
+- `src/data/resume.ts`
 
-## Troubleshooting
+Edit these fields to update the site:
+- `name`, `summary`
+- `experience` (title, company, dates, bullets)
+- `skills` (arrays for quick edits)
+- `education`
+- Optional `links` (e.g., GitHub/LinkedIn)
 
-- If Tailwind classes don’t apply, confirm the `@tailwindcss/vite` plugin is in `vite.config.ts` and `@import "tailwindcss";` exists in `src/index.css`.
-- If path alias `@` fails in `vite.config.ts`, ensure Node types are enabled in `tsconfig.node.json` and the alias uses `fileURLToPath(new URL('./src', import.meta.url))`.
-- If tests fail due to multiple elements found, scope queries with `within` or use `getAllBy*`.
+## Run locally (optional)
+
+If you want to preview changes locally:
+
+```bash
+npm install
+npm run dev
+```
+
+Build for deployment:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Notes
+
+- The site is optimized for printing; the sidebar and controls are hidden in the PDF.
+- The favicon and web app icons are included under `public/`.
+
+## Contact
+
+LinkedIn: https://www.linkedin.com/in/rowellewis
+
+## License & usage
+
+All resume content © Rowel Lewis. Please do not copy or reuse without permission.

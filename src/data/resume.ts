@@ -3,7 +3,7 @@ import type { Resume } from '../types/resume'
 export const resume: Resume = {
   name: 'Rowel Lewis',
   summary:
-    'Software Engineer (2+ yrs) specializing in .NET Core services, Sage Intacct integrations, and cloud deployments. Pragmatic problem-solver focused on performance, reliability, and delivering scalable financial workflows in Agile teams.',
+    'Software Engineer (2+ yrs) specializing in .NET Core services, Sage Intacct integrations, and cloud deployments. Pragmatic problem-solver focused on performance, reliability, and delivering scalable systems in Agile teams.',
   experience: [
     {
       title: 'Software Engineer',
@@ -11,16 +11,16 @@ export const resume: Resume = {
       start: 'Aug 2023',
       end: 'Present',
       bullets: [
-        'Shipped .NET Core features and Sage Intacct API integrations for finance apps; improved stability and throughput.',
-        'Deployed apps to Azure, AWS (Elastic Beanstalk, ECS, EC2), and Heroku; automated configs, routing, and rollouts to cut manual ops.',
-        'Built fast, reliable PDF export flows tailored to client reporting needs.',
-        'EMR Connect: Implemented credit/debit offset balancer for GL entries; reduced errors and won internal award.',
-        'HCM Connect: Migrated core features; optimized API-based imports to reduce memory and improve high-load performance.',
-        'Created CI/CD pipelines in Azure DevOps for Azure/AWS/Heroku targets.',
-        'Authored tools for Heroku app config management and automated work item creation, reducing manual toil.',
-        'Optimized memory usage (string allocation reductions, StringBuilder) and tuned GC for steady performance under load.',
-        'Performed memory dump analysis to resolve leaks and regressions.',
-        'Maintained internal .NET libraries for reuse across teams.',
+        'Delivered .NET Core features and Sage Intacct integrations with a focus on reliability, throughput, and predictable releases.',
+        'Built a dependable PDF export flow for client reporting, reducing turnaround time and support touchpoints.',
+        'Standardized deployments across Azure, AWS (Elastic Beanstalk, ECS, EC2), and Heroku; simplified configs and rollbacks to shorten release lead time.',
+        'EMR Connect: Implemented a GL credit/debit offset balancer; reduced posting errors and earned internal recognition.',
+        'HCM Connect: Migrated core features and optimized import paths to lower memory usage and maintain performance under load.',
+        'CI/CD: Authored Azure DevOps pipelines targeting Azure/AWS/Heroku for predictable, low‑friction releases.',
+        'Tooling: Created utilities for Heroku app configuration and automated work‑item creation to cut manual effort.',
+        'Performance: Reduced allocations, used StringBuilder strategically, and tuned GC to stabilize p95 latency.',
+        'Reliability: Performed memory‑dump analysis to resolve leaks and regressions; added guardrails to prevent recurrence.',
+        'Reusability: Built and maintain several shared .NET libraries (services, config, API clients, utilities) adopted across teams.',
       ],
     },
   ],
@@ -46,5 +46,7 @@ export const resume: Resume = {
       graduationDate: 'July 2022',
     },
   ],
-  links: [],
+  links: [
+    { label: 'GitHub', url: 'https://github.com/rowellewis' },
+  ],
 }

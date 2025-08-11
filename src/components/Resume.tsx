@@ -1,9 +1,10 @@
 import type { Resume as ResumeType } from '../types/resume'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { useEffect, useState, type ComponentType } from 'react'
-import { EnvelopeIcon, MapPinIcon, UserIcon, BriefcaseIcon, WrenchScrewdriverIcon, AcademicCapIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
+import { MapPinIcon, UserIcon, BriefcaseIcon, WrenchScrewdriverIcon, AcademicCapIcon } from '@heroicons/react/24/outline'
 import { LinkIcon } from '@heroicons/react/24/solid'
+import { cn } from '@/lib/utils'
+import LinkedInBadge from './LinkedInBadge'
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   const Icon = (
@@ -15,7 +16,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   return (
     <section aria-labelledby={`section-${title}`} className="section">
       <h2 id={`section-${title}`} className="text-lg font-semibold tracking-tight border-b border-border pb-1 mt-6 first:mt-0 flex items-center gap-2">
-        {Icon ? <Icon aria-hidden="true" className="size-4 text-primary" /> : null}
+        {Icon ? <Icon aria-hidden="true" className="size-4 text-foreground" /> : null}
         <span>{title}</span>
       </h2>
   <div className="mt-3 space-y-3">{children}</div>
@@ -25,18 +26,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function Resume({ data }: { data: ResumeType }) {
   const [active, setActive] = useState<string>('Summary')
-  const [isDark, setIsDark] = useState<boolean>(false)
+  // Dark mode removed
 
   useEffect(() => {
-    // Initial theme
-    try {
-      const stored = localStorage.getItem('theme')
-      const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      const dark = stored ? stored === 'dark' : !!prefers
-      document.documentElement.classList.toggle('dark', dark)
-      setIsDark(dark)
-    } catch {}
-
     const ids = ['Summary', 'Experience', 'Skills', 'Education']
     const els = ids
       .map((s) => document.getElementById(`section-${s}`))
@@ -57,36 +49,22 @@ export function Resume({ data }: { data: ResumeType }) {
     return () => observer.disconnect()
   }, [])
 
-  const toggleTheme = () => {
-    const next = !isDark
-    setIsDark(next)
-    document.documentElement.classList.toggle('dark', next)
-    try {
-      localStorage.setItem('theme', next ? 'dark' : 'light')
-    } catch {}
-  }
+  // no theme toggle
   return (
-    <div className="resume mx-auto max-w-7xl px-4 md:px-8 py-8 print:px-0">
+    <div className="resume mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 print:px-0">
       {/* Mobile top bar */}
       <div className="lg:hidden sticky top-0 z-10 bg-background/80 backdrop-blur border-b py-2 print:hidden">
         <div className="flex items-center justify-between">
           <div className="font-bold">{data.name}</div>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline" onClick={toggleTheme} aria-label="Toggle theme">
-              {isDark ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
-            </Button>
-            <Button size="sm" onClick={() => window.print()}>Download PDF</Button>
-          </div>
         </div>
       </div>
-      <div className="grid gap-10 lg:grid-cols-12">
+  <div className="grid gap-10 lg:grid-cols-[300px_1fr] xl:grid-cols-[320px_1fr]">
         {/* Sidebar / Banner */}
-        <header className="header lg:col-span-4 print:static lg:sticky lg:top-8 self-start" role="banner">
-          <h1 className="name text-5xl font-extrabold tracking-tight leading-tight">{data.name}</h1>
-          <p className="mt-1 text-muted-foreground">Software Engineer · .NET Core · Integrations · Cloud</p>
-          <p className="mt-1 flex flex-wrap gap-3 items-center text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-1"><MapPinIcon className="size-4" /> Bengaluru</span>
-            <span className="inline-flex items-center gap-1"><EnvelopeIcon className="size-4" /> rowellewis550@gmail.com</span>
+        <header className="header print:static lg:sticky lg:top-8 self-start" role="banner">
+          <h1 className="name text-4xl xl:text-5xl font-extrabold tracking-tight leading-tight text-balance">{data.name}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Software Engineer · .NET Core · Integrations · Cloud</p>
+          <p className="mt-2 flex flex-wrap gap-3 items-center text-sm text-muted-foreground">
+            <span className="inline-flex items-center gap-1"><MapPinIcon className="size-4 text-muted-foreground" /> Bengaluru</span>
           </p>
           {data.links && data.links.length > 0 && (
             <nav aria-label="Profile links" className="links mt-3">
@@ -102,7 +80,7 @@ export function Resume({ data }: { data: ResumeType }) {
             </nav>
           )}
           {/* In-page navigation */}
-          <nav aria-label="Sections" className="mt-6 hidden lg:block">
+          <nav aria-label="Sections" className="mt-6 hidden lg:block sidebar">
             <ul className="space-y-1 text-sm">
               {['Summary', 'Experience', 'Skills', 'Education'].map((s) => {
                 const isActive = active === s
@@ -110,19 +88,19 @@ export function Resume({ data }: { data: ResumeType }) {
                   <li key={s} className="relative">
                     <a
                       href={`#section-${s}`}
-                      className={[
-                        'group flex items-center gap-2 pl-3 pr-2 py-1 rounded-sm transition-colors',
+                      className={cn(
+                        'group relative block rounded-sm pl-3 pr-2 py-1 transition-colors',
                         'text-primary/80 hover:text-primary focus:text-primary',
-                        isActive ? 'text-primary font-semibold' : 'font-medium'
-                      ].join(' ')}
+                        isActive && 'text-primary font-semibold'
+                      )}
                     >
                       <span
                         aria-hidden
-                        className={[
+                        className={cn(
                           'absolute left-0 top-1/2 -translate-y-1/2 h-5 w-0.5 rounded-full bg-primary/60',
                           'opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity',
-                          isActive ? 'opacity-100' : ''
-                        ].join(' ')}
+                          isActive && 'opacity-100'
+                        )}
                       />
                       {s}
                     </a>
@@ -131,28 +109,22 @@ export function Resume({ data }: { data: ResumeType }) {
               })}
             </ul>
           </nav>
-          <div className="mt-6 print:hidden">
-            <div className="flex items-center gap-2">
-              <Button variant="outline" onClick={toggleTheme} aria-label="Toggle theme">
-                {isDark ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
-              </Button>
-              <Button onClick={() => window.print()} className="print-btn">Download PDF</Button>
-            </div>
+          {/* LinkedIn badge embed */}
+          <div className="mt-6">
+            <LinkedInBadge vanity="rowellewis" href="https://in.linkedin.com/in/rowellewis?trk=profile-badge" size="small" />
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="lg:col-span-8 space-y-10">
+  <main className="space-y-10">
           <Section title="Summary">
-            <p className="text-sm leading-7 text-muted-foreground max-w-prose">{data.summary}</p>
+            <p className="text-[15.5px] leading-relaxed text-muted-foreground max-w-none">{data.summary}</p>
           </Section>
 
         <Section title="Experience">
-          <ul className="experience relative grid gap-8 scroll-smooth">
-            <div className="absolute left-3 top-1 bottom-1 border-s border-primary/30 pointer-events-none" aria-hidden="true" />
+          <ul className="experience grid gap-8">
             {data.experience.map((job, idx) => (
-              <li key={`${job.company}-${idx}`} className="job relative pl-10">
-                <div className="absolute left-0 top-2 size-2 rounded-full bg-primary shadow-[0_0_0_3px] shadow-primary/20" aria-hidden="true" />
+              <li key={`${job.company}-${idx}`} className="job">
                 <h3 className="text-base font-semibold">
                   {job.title} · {job.company}
                 </h3>
@@ -163,9 +135,9 @@ export function Resume({ data }: { data: ResumeType }) {
                   {job.location && <span> · {job.location}</span>}
                 </div>
                 {job.bullets && job.bullets.length > 0 && (
-                  <ul className="bullets mt-3 grid gap-2 list-disc pl-5 max-w-prose">
+                  <ul className="bullets mt-3 grid gap-2 list-disc pl-5 text-left">
                     {job.bullets.map((b, i) => (
-                      <li key={i} className="text-sm leading-7">{b}</li>
+                      <li key={i} className="text-[15px] leading-relaxed">{b}</li>
                     ))}
                   </ul>
                 )}
@@ -182,7 +154,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.programmingLanguages.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -192,7 +164,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.cloudPlatforms.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -202,7 +174,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.devopsTools.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -212,7 +184,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.webServices.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -222,7 +194,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.database.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -232,7 +204,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.coreSkills.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -242,7 +214,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.projectManagement.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
@@ -252,7 +224,7 @@ export function Resume({ data }: { data: ResumeType }) {
                 <dd className="mt-0.5 text-muted-foreground">
                   <div className="flex flex-wrap gap-1.5">
                     {data.skills.tools.map((s) => (
-                      <Badge key={s} variant="secondary">{s}</Badge>
+                      <Badge key={s} variant="outline" className="border-primary/20 bg-primary/5 text-foreground">{s}</Badge>
                     ))}
                   </div>
                 </dd>
