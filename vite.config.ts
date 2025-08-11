@@ -6,14 +6,15 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/rowellewis.dev/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-  '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   test: {
-  globals: true,
+    globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
     css: true,
