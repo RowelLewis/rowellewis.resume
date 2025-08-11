@@ -18,7 +18,7 @@ export const resume: Resume = {
         'HCM Connect: Migrated core features and optimized import paths to lower memory usage and maintain performance under load.',
         'CI/CD: Authored Azure DevOps pipelines targeting Azure/AWS/Heroku for predictable, low‑friction releases.',
         'Tooling: Created utilities for Heroku app configuration and automated work‑item creation to cut manual effort.',
-        'Performance: Reduced allocations, used StringBuilder strategically, and tuned GC to stabilize p95 latency.',
+        'Performance: Reduced allocations, used StringBuilder strategically, and tuned GC for consistent, predictable batch processing times.',
         'Reliability: Performed memory‑dump analysis to resolve leaks and regressions; added guardrails to prevent recurrence.',
         'Reusability: Built and maintain several shared .NET libraries (services, config, API clients, utilities) adopted across teams.',
       ],
