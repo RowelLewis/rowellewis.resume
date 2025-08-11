@@ -1,4 +1,4 @@
-# rowellewis.dev
+# rowellewis.resume
 
 This repository contains my resume website. It’s a simple, fast, and print‑friendly page that presents my experience and skills.
 
@@ -52,7 +52,7 @@ To deploy this site to GitHub Pages:
 1. **Set the base path in Vite config**
 	- In `vite.config.ts`, add:
 	  ```js
-	  base: '/rowellewis.dev/',
+	  base: '/rowellewis.resume/',
 	  ```
 	  (If your repo name changes, update the path accordingly.)
 
@@ -75,7 +75,7 @@ To deploy this site to GitHub Pages:
 
 5. **Visit your site**
 	- Your app will be live at:
-	  `https://rowellewis.github.io/rowellewis.dev/`
+	  `https://rowellewis.github.io/rowellewis.resume/`
 
 ## Contact
 
